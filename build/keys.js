@@ -6,6 +6,7 @@ exports.default = {
         user: 'diseno1',
         database: 'dbb',
         password: 'diseno12345',
-        port: 3306
+        port: 3306,
+        acquireTimeout: 10000
     }
 };
