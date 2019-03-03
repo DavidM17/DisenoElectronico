@@ -7,6 +7,6 @@ exports.default = {
         database: 'dbb',
         password: 'diseno12345',
         port: 3306,
-        acquireTimeout: 10000
+        acquireTimeout: 15000
     }
 };
