@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     database: {
-        host: 'testdb.c58xpfskqzck.us-east-1.rds.amazonaws.com',
-        user: 'diseno1',
+        host: '',
+        user: '',
         database: 'dbb',
-        password: 'diseno12345',
+        password: '',
         port: 3306,
         acquireTimeout: 50000
     }
