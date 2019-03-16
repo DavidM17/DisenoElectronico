@@ -25,10 +25,9 @@ class dataController {
             const hour1 = req.params.hour1;
             const date2 = req.params.date2;
             const hour2 = req.params.hour2;
-            const type = "SELECT * FROM coord WHERE fecha >= '" + date1 + "' '" + hour1 + "' AND fecha <= '" + date2 + "' '" + hour2 + "'";
-            const data = yield database_1.default.query("SELECT * FROM coord WHERE fecha >= '2019-03-16' '08:56:04' AND fecha <= '2019-03-16' '08:58:43'");
+            const type = "SELECT * FROM coord WHERE fecha >= '" + date1 + " " + hour1 + "' AND fecha <= '" + date2 + " " + hour2 + "'";
+            const data = yield database_1.default.query(type);
             res.json(data);
-            console.log(data);
         });
     }
 }
