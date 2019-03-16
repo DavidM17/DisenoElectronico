@@ -18,7 +18,7 @@ var h;
 serverdb.on("message", function (msg) {
     coord = msg.toString('utf8');
     var key = coord.slice(46, 54);
-    if (key == "DBJ12345") {
+    if (key == "DBJ12345" || key == "DBJ12346") {
         console.log(coord);
         dt = coord.slice(6, 10);
         lat = coord.slice(16, 19) + "." + coord.slice(19, 24);
@@ -26,7 +26,12 @@ serverdb.on("message", function (msg) {
         h = coord.slice(11, 16);
         // Days
         var n = coord[10];
-        var now = new Date('January 6, 1980 00:00:00 GMT+05:00');
+        if (key == "DBJ12346") {
+            var now = new Date('January 6, 1980 00:00:00 GMT+0:00');
+        }
+        else {
+            var now = new Date('January 6, 1980 00:00:00 GMT+5:00');
+        }
         //Year
         now.setDate(now.getDate() + (dt * 7));
         now.setSeconds(now.getSeconds() + h);
@@ -36,22 +41,32 @@ serverdb.on("message", function (msg) {
         n = parseInt(n, 10);
         // The last day of the week change if its over wednesday 12:00
         // To the lastweek day variable remove 7 days
-        if (n >= 3 && h > 43200) {
+        if (n >= 3 && h > 43200) { //43200
+            ld = ld - 7;
+        }
+        if (n >= 4) {
             ld = ld - 7;
         }
         // If its less than 5:00 to the reference hour then keep day as the 
         // addition of lastweek day plus the number given by the syrus
-        if (h < 18000) {
-            var day = ld + n;
+        if (key == "DBJ12345") {
+            if (h < 18000) {
+                var day = ld + n;
+            }
+            else {
+                // If not add 1 day to because it's already the next day
+                var day = ld + n + 1;
+            }
         }
         else {
-            // If not add 1 day to because it's already the next day
             var day = ld + n + 1;
         }
+        ;
         // Set the day number to Date
         now.setDate(day);
         // Convert of time format
-        var x = now.toUTCString();
+        var x = now.toISOString().slice(0, 19).replace('T', ' ');
+        ;
         // Convert data from string to Float
         lat = parseFloat(lat);
         lon = parseFloat(lon);
@@ -79,7 +94,7 @@ class indexRoutes {
         this.config();
     }
     config() {
-        this.router.get('/data', dataController_1.datacontroller.list);
+        this.router.get('/data', dataController_1.datacontroller.list); // Route for the requests
     }
 }
 const indexroutes = new indexRoutes();
